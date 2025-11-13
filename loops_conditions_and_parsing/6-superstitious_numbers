@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
-# Displays numbers 1 to 20 with superstition messages
+# Displays numbers 1 to 20 with superstition messages using case
 i=1
 while [ $i -le 20 ]; do
-  if [ $i -eq 4 ]; then
-    echo "$i: bad luck"
-  elif [ $i -eq 9 ]; then
-    echo "$i: bad luck from China"
-  elif [ $i -eq 17 ]; then
-    echo "$i: bad luck from Italy"
-  else
-    echo "$i"
-  fi
+  case $i in
+    4)
+      echo "$i: bad luck from China"
+      ;;
+    9)
+      echo "$i: bad luck from Japan"
+      ;;
+    17)
+      echo "$i: bad luck from Italy"
+      ;;
+    *)
+      echo "$i"
+      ;;
+  esac
   ((i++))
 done
 
