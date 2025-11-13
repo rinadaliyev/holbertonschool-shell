@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
-#This script is task 4
-i=0
-
-while [ $i -le 10 ]
-do
- ((i++))
- echo "Best School";
- if [ "$i" = 9]; then
-  echo "Hi"
- fi
+# Displays "Best School" 10 times, adds "Hi" on 9th
+i=1
+while [ $i -le 10 ]; do
+  echo "Best School"
+  if [ $i -eq 9 ]; then
+    echo "Hi"
+  fi
+  ((i++))
 done
