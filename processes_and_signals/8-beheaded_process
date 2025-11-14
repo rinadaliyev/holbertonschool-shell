@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-# Script to stop 4-to_infinity_and_beyond process without using kill/killall
-PROCESS_NAME="7-highlander"
-kill "$PROCESS_NAME"
+# Script to stop the 7-highlander process
+
+pkill -f 7-highlander
+
