@@ -1,3 +1,46 @@
 #!/usr/bin/env bash
-# Stops the 4-to_infinity_and_beyond process
-pkill -f 4-to_infinity_and_beyond
+# Script to stop 4-to_infinity_and_beyond process without using kill/killall
+
+PROCESS_NAME="4-to_infinity_and_beyond"
+
+# Find the process ID(s)
+PIDS=$(pgrep -f "$PROCESS_NAME")
+
+if [ -z "$PIDS" ]; then
+    echo "No process found matching: $PROCESS_NAME"
+    exit 1
+fi
+
+echo "Found process(es) with PID(s): $PIDS"
+
+# Stop each process using pkill
+pkill -f "$PROCESS_NAME"
+
+# Wait a moment and check if processes were terminated
+sleep 1
+
+# Verify termination
+REMAINING=$(pgrep -f "$PROCESS_NAME")
+
+if [ -z "$REMAINING" ]; then
+    echo "Successfully stopped process: $PROCESS_NAME"
+    exit 0
+else
+    echo "Warning: Process may still be running with PID(s): $REMAINING"
+    echo "Attempting forceful termination..."
+    
+    # Force termination if still running
+    pkill -9 -f "$PROCESS_NAME"
+    
+    sleep 1
+    
+    # Final check
+    FINAL_CHECK=$(pgrep -f "$PROCESS_NAME")
+    if [ -z "$FINAL_CHECK" ]; then
+        echo "Process forcefully terminated"
+        exit 0
+    else
+        echo "Error: Unable to stop process"
+        exit 1
+    fi
+fi
