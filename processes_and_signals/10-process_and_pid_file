@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 # PID file and signal handling
+PIDFILE="/var/run/myscript.pid"
 
-echo $$ > /var/run/myscript.pid
+mkdir -p "$(dirname "$PIDFILE")" 2>/dev/null
 
+# Save PID
+echo $$ > "$PIDFILE" 2>/dev/null
 trap "echo 'I hate the kill command'" SIGTERM
 trap "echo 'Y U no love me?!'" SIGINT
 trap "rm -f /var/run/myscript.pid; exit" SIGQUIT SIGTERM
