@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
-# PID file and signal handling
-PIDFILE="/var/run/myscript.pid"
+# Complex pid files killing
+PATH_PID="/var/run/myscript.pid"
+echo $$ > "$PATH_PID"
 
-mkdir -p "$(dirname "$PIDFILE")" 2>/dev/null
-
-# Save PID
-echo $$ > "$PIDFILE" 2>/dev/null
-trap "echo 'I hate the kill command'" SIGTERM
-trap "echo 'Y U no love me?!'" SIGINT
-trap "rm -f /var/run/myscript.pid; exit" SIGQUIT SIGTERM
+trap 'echo I hate the kill command; rm -rf $PATH_PID; exit' SIGTERM
+trap "echo Y U no love me?!" SIGINT
+trap 'rm -rf $PATH_PID; exit' SIGQUIT
 
 while true; do
-    echo "To infinity and beyond indefinitely"
-    sleep 2
+echo "To infinity and beyond"
+sleep 1
 done
