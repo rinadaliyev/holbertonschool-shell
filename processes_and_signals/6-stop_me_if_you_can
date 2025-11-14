@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Script to stop 4-to_infinity_and_beyond process without using kill/killall
-PROCESS_NAME="4-to_infinity_and_beyond"
-pkill -f "$PROCESS_NAME"
+# Do not stop me now
+
+pkill -2 -f "./4-to_infinity_and_beyond"

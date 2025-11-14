@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-#stopper
-pid=$(pgrep -f 4-to_infinity_and_beyond)
+# Do not stop me now
+PID=$(pgrep -f "4-to_infinity_and_beyond")
 
-if [ -n "$pid" ]; then
-    kill "$pid"
-fi
+kill "$PID" 

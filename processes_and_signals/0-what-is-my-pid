@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-#display pid
-echo "$$"
+# Displaying the PID of the current bash
+pidof bash | awk -F'[[:space:]]+' '{print $1}'

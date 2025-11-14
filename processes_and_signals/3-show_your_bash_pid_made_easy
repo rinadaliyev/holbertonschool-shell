@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-#display bash pud easy
-pgrep -l bash
+# Displaying the pid and name
+pgrep --list-name bash

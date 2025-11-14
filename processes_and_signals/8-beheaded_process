@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Script to stop the 7-highlander pprocess
-
-pkill -9 -f 7-highlander
-
+# Kill the proccess
+PID=$(pgrep -f "./7-highlander")
+kill -9 "$PID"

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-#infinity
-i=0
-while [ $i -eq 0 ]; do
+# Sleep 2 sec in each loop iteration
+trap "echo Terminated; exit" SIGINT
+
+while true; do
 echo "To infinity and beyond"
 sleep 2
 done
