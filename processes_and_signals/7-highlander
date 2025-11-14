@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# 7-highlander process script
+
+# Trap SIGTERM
+trap "echo 'I am invincible!!!'" SIGTERM
+
+# Infinite loop
+while true; do
+    echo "To infinity and beyond indefinitely"
+    sleep 2
+done
