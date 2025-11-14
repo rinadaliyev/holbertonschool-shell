@@ -1,37 +1,38 @@
 #!/usr/bin/env bash
-# Main Controller
+# Init-style script to manage manage_my_process
+
+PIDFILE="/var/run/my_process.pid"
 PROCESS="./manage_my_process"
-PID_FILE="/var/run/my_process.pid"
-PID_FILE_TEMP="/tmp/my_process.pid"
 
 case "$1" in
-  start)
-    if [ -f "$PID_FILE" ]; then
-       echo "Proccess is already running"
-    fi
-
-    $PROCESS &
-    echo $! > "$PID_FILE_TEMP"
-    mv "$PID_FILE_TEMP" "$PID_FILE"
-    echo "manage_my_process started"
-  ;;
-  stop)
-    kill "$(cat $PID_FILE)"
-    rm -f "$PID_FILE"
-    echo "manage_my_process stopped"
-  ;;
-  restart)
-    kill "$(cat $PID_FILE)"
-    mv "$PID_FILE" "$PID_FILE_TEMP"
-    echo "manage_my_process restarted"
-    sleep 1
-    $PROCESS &
-    echo $! > "$PID_FILE_TEMP"
-    mv "$PID_FILE_TEMP" "$PID_FILE"
-  ;;
-  *)
-    echo "Usage: manage_my_process {start|stop|restart}"
-  ;;
+    start)
+        # Start the process in background
+        $PROCESS &
+        echo $! > "$PIDFILE"
+        echo "manage_my_process started"
+        ;;
+    stop)
+        # Stop the process if PID file exists
+        if [ -f "$PIDFILE" ]; then
+            kill "$(cat "$PIDFILE")" 2>/dev/null
+            rm -f "$PIDFILE"
+        fi
+        echo "manage_my_process stopped"
+        ;;
+    restart)
+        # Stop if running
+        if [ -f "$PIDFILE" ]; then
+            kill "$(cat "$PIDFILE")" 2>/dev/null
+            rm -f "$PIDFILE"
+        fi
+        # Start
+        $PROCESS &
+        echo $! > "$PIDFILE"
+        echo "manage_my_process restarted"
+        ;;
+    *)
+        # Invalid or missing argument
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
 esac
-
-

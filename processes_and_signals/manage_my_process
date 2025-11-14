@@ -1,38 +1,7 @@
 #!/usr/bin/env bash
-# Init-style script to manage manage_my_process
+# Script that writes "I am alive!" to /tmp/my_process every 2 seconds
 
-PIDFILE="/var/run/my_process.pid"
-PROCESS="./manage_my_process"
-
-case "$1" in
-    start)
-        # Start the process in background
-        $PROCESS &
-        echo $! > "$PIDFILE"
-        echo "manage_my_process started"
-        ;;
-    stop)
-        # Stop the process if PID file exists
-        if [ -f "$PIDFILE" ]; then
-            kill "$(cat "$PIDFILE")" 2>/dev/null
-            rm -f "$PIDFILE"
-        fi
-        echo "manage_my_process stopped"
-        ;;
-    restart)
-        # Stop
-        if [ -f "$PIDFILE" ]; then
-            kill "$(cat "$PIDFILE")" 2>/dev/null
-            rm -f "$PIDFILE"
-        fi
-        # Start
-        $PROCESS &
-        echo $! > "$PIDFILE"
-        echo "manage_my_process restarted"
-        ;;
-    *)
-        echo "Usage: manage_my_process {start|stop|restart}"
-        exit 1
-        ;;
-esac
-
+while true; do
+    echo "I am alive!" >> /tmp/my_process
+    sleep 2
+done
