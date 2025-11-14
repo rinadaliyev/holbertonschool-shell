@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Complex pid files killing
+
 PATH_PID="/var/run/myscript.pid"
 echo $$ > "$PATH_PID"
 
