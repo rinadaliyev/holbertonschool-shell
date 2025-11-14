@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Main Controller
+PROCESS="./manage_my_process"
+PID_FILE="/var/run/my_process.pid"
+PID_FILE_TEMP="/tmp/my_process.pid"
+
+case "$1" in
+  start)
+    if [ -f "$PID_FILE" ]; then
+       echo "Proccess is already running"
+    fi
+
+    $PROCESS &
+    echo $! > "$PID_FILE_TEMP"
+    mv "$PID_FILE_TEMP" "$PID_FILE"
+    echo "manage_my_process started"
+  ;;
+  stop)
+    kill "$(cat $PID_FILE)"
+    rm -f "$PID_FILE"
+    echo "manage_my_process stopped"
+  ;;
+  restart)
+    kill "$(cat $PID_FILE)"
+    mv "$PID_FILE" "$PID_FILE_TEMP"
+    echo "manage_my_process restarted"
+    sleep 1
+    $PROCESS &
+    echo $! > "$PID_FILE_TEMP"
+    mv "$PID_FILE_TEMP" "$PID_FILE"
+  ;;
+  *)
+    echo "Usage: manage_my_process {start|stop|restart}"
+  ;;
+esac
+
+

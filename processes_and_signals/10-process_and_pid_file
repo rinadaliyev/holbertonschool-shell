@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Complex pid files killing
-
 PATH_PID="/var/run/myscript.pid"
 echo $$ > "$PATH_PID"
 
@@ -12,3 +11,4 @@ while true; do
 echo "To infinity and beyond"
 sleep 1
 done
+
